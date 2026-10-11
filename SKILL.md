@@ -7,6 +7,8 @@ description: Use when an agent needs project-wide codebase orientation, an archi
 
 Map semantic building blocks and interactions, not directories or ideal architecture. Explain what exists, when it fits, how to use it, and which contracts must survive.
 
+First identify any supplied or available capability map or explicit project classification. Use its decomposition as starting navigation, not authority.
+
 Read [the map contract](references/map-contract.md) before producing a map or reuse decision for required fields, evidence, coverage, and an example.
 
 ## Classes
@@ -19,7 +21,7 @@ Read [the map contract](references/map-contract.md) before producing a map or re
 | Cross-cutting mechanisms | Which shared protocol governs multiple blocks? |
 | State and resources | Where do data/resources live, and who owns their lifecycle? |
 
-Assign one primary class by responsibility; note secondary roles. Show absent/uninspected classes explicitly. Shared usage does not make a helper cross-cutting. Blocks need not be independently deployable or isolated.
+Assign one primary semantic class by responsibility, not programming-language class or module/directory structure; note secondary roles. Show absent/uninspected classes explicitly; do not force five blocks or fill every class. Shared usage does not make a helper cross-cutting. Blocks need not be independently deployable or isolated.
 
 ## Build a Map
 
@@ -31,7 +33,9 @@ Assign one primary class by responsibility; note secondary roles. Show absent/un
 
 ## Use or Refresh a Map
 
-For a task, identify block IDs and re-read current contracts, wiring, constraints, and examples. Saved maps are navigation, not authority. Report stale claims; refresh affected cards and relationships only. Return task-to-block fit, verified integration path, restrictions, and genuine gaps. Do not force obsolete or incompatible code.
+For a task, identify block IDs and re-read current implementation, contracts, callers, wiring, constraints, and examples. Preserve confirmed semantic names, boundaries, and stable IDs; explicitly justify discrepancies rather than silently rebuilding. Report stale claims; refresh affected cards and relationships only. Return task-to-block fit, verified integration path, restrictions, and genuine gaps. Do not force obsolete or incompatible code.
+
+Build a full map when full analysis is requested, architecture has materially changed, or no usable map exists, including an empty, uninvestigated map. An explicit project classification still provides a starting decomposition.
 
 ## Boundaries and Common Mistakes
 

@@ -4,9 +4,9 @@
 
 Use this contract for build, reuse, and refresh modes. Output prose in the user's language; keep class identifiers and block IDs stable when updating a saved map.
 
-A block is a coherent responsibility with a describable contract and a recognizable way to use it. A contract may be a function, protocol, configuration/registration convention, or lifecycle, not necessarily a public API. It can span files or share a file with another block. Dependencies are normal: this is a map of the existing project, not a redesign into independent services.
+A block is a coherent responsibility with a describable contract and a recognizable way to use it. A contract may be a function, protocol, configuration/registration convention, or lifecycle, not necessarily a public API. It can span files or share a file with another block. Dependencies are normal: this is a map of the existing project, not a redesign into independent services. Classification does not require restructuring code.
 
-Start at the level of major capabilities and interactions. Introduce child blocks only when they have distinct contracts or a caller needs to select them separately. Keep minor helpers as implementation evidence. In a monorepo, identify independently operated projects first, then their blocks and actual shared mechanisms; do not infer a shared bus or store from similar names.
+Start from an available map or explicit project classification at the level of major capabilities and interactions. Introduce child blocks only when they have distinct contracts or a caller needs to select them separately. Keep minor helpers as implementation evidence. In a monorepo, identify independently operated projects first, then their blocks and actual shared mechanisms; do not infer a shared bus or store from similar names.
 
 ## Classification
 
@@ -18,7 +18,7 @@ Start at the level of major capabilities and interactions. Introduce child block
 | Cross-cutting mechanisms | Event protocols, authorization enforcement, diagnostic propagation, deadline accounting | Main purpose is a shared behavioral convention spanning distinct responsibilities, not merely utility reuse. |
 | State and resources | Persistence, caches, registries, connection/execution pools | Main purpose is storing/accessing state or owning resource lifecycle. |
 
-One primary class per block; add secondary roles rather than duplicating the same block. Classify a database-backed repository by state ownership and a remote-generation client by boundary translation. Separate a client-facing polling interface from its buffer only when the distinction helps explain contracts. Empty classes are valid; use "absent in inspected scope" or "not investigated", never invent blocks to fill them.
+Classes are semantic roles, not programming-language classes or module/directory structure. One primary class per block; add secondary roles rather than duplicating the same block. Classify a database-backed repository by state ownership and a remote-generation client by boundary translation. Separate a client-facing polling interface from its buffer only when the distinction helps explain contracts. Empty classes are valid; use "absent in inspected scope" or "not investigated", never invent blocks to fill them.
 
 An ordinary public library function is an entry to its capability, not a Boundaries block solely because external code can call it. Classify it by its work. A distinct library facade adapting a protocol or exchange format can qualify as a boundary; API visibility alone cannot.
 
@@ -64,14 +64,14 @@ For each coverage axis list the relevant block IDs, evidence, and omissions: ext
 
 ## Task Reuse Output
 
-Do not rebuild the entire map for every task. Return:
+For a bounded task, refresh affected cards and relationships rather than rebuilding the entire map. Use the skill's full-build conditions when broader investigation is needed. Return:
 
 1. Task and relevant block IDs, including collaborators needed for a safe integration.
-2. Current evidence: rechecked entry, registration, representative usage, and applicable constraints; identify stale map claims explicitly.
+2. Current evidence: rechecked implementation, entry/contracts, callers, registration/wiring, representative usage, and applicable constraints; identify stale claims and justify discrepancies with the existing decomposition explicitly.
 3. Integration path: which existing mechanism fits, where to connect, and which outputs/state changes remain separate.
 4. Fit and gaps: explain why reuse is appropriate or why no suitable path was established. Distinguish confirmed incompatibility from missing evidence.
 
-If the task also authorizes implementation, this map informs that work but does not widen its permission. Otherwise return guidance without changing code. Update saved content only with write permission; preserve IDs and unaffected material.
+If the task also authorizes implementation, this map informs that work but does not widen its permission. Otherwise return guidance without changing code. Update saved content only with write permission; preserve confirmed semantic names, boundaries, stable IDs, and unaffected material.
 
 ## Worked Example: Events
 
