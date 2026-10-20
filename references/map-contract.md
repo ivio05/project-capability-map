@@ -6,7 +6,15 @@ Use this contract for build, reuse, and refresh modes. Output prose in the user'
 
 A block is a coherent responsibility with a describable contract and a recognizable way to use it. A contract may be a function, protocol, configuration/registration convention, or lifecycle, not necessarily a public API. It can span files or share a file with another block. Dependencies are normal: this is a map of the existing project, not a redesign into independent services. Classification does not require restructuring code.
 
-Start from an available map or explicit project classification at the level of major capabilities and interactions. Introduce child blocks only when they have distinct contracts or a caller needs to select them separately. Keep minor helpers as implementation evidence. In a monorepo, identify independently operated projects first, then their blocks and actual shared mechanisms; do not infer a shared bus or store from similar names.
+Start from an available map or explicit project classification. The entire requested map has at most ten top-level semantic responsibility blocks, counted across all classes and projects, not ten per class, directory, or service. Ten is a ceiling, not a target; a small library may need only two blocks.
+
+Build the hierarchy by cohesive responsibility or scenario, not folders, arbitrary equal chunks, or a miscellaneous bucket. Retain substantive distinct contracts, or capabilities callers select separately, as nested children with full cards and evidence. Keep minor helpers as implementation evidence. Choose meaningful parents rather than hiding an unchanged flat catalog under a generic project wrapper.
+
+Containment is navigation only: a parent summarizes a responsibility, not necessarily a runtime component, owner, caller, or new facade. State that distinction on grouping cards; their entry/usage fields point to actual child contracts, not invented APIs. Each block has one placement and a stable ID independent of its parent; cross-link shared use instead of duplicating cards. Moving a surviving block preserves its ID.
+
+Overview and parent summaries carry only guarantees supported by child evidence; detailed caveats do not repair an overstated summary. For example, returning a new graph does not establish input immutability or a non-mutating operation.
+
+In a monorepo, identify independently operated project scopes, then group their responsibilities within the same global ceiling. Preserve service identity on nested cards and evidence, even when a cohesive parent spans services. Do not infer shared instances, buses, stores, or interactions from containment or similar names.
 
 ## Classification
 
@@ -32,7 +40,9 @@ Identify project root/name, inspection date, revision and worktree state if avai
 
 ### 2. Classified Index
 
-Group by all five classes, including empty/uninspected ones. Each row gives a semantic name, stable local ID, responsibility, reuse trigger, and status. Use names such as "Run generation" rather than `runs.py`. Paths belong in evidence, not as the unit of classification.
+The overview lists only root blocks, grouped by primary class. Each row gives a semantic name, stable local ID, responsibility, reuse trigger, and status. Keep child detail nested under its parent, not flattened into extra overview peers. Use names such as "Run generation" rather than `runs.py`. Paths belong in evidence, not as the unit of classification.
+
+Show coverage of all five classes across every hierarchy level. A class represented only by children points to their IDs; it is not absent merely because no root has that primary class. Mark genuinely absent/uninspected classes explicitly. Classify each child by its own responsibility, not by inheritance from its parent.
 
 Status describes evidence, not approval: observed connected in this snapshot, documented deprecated, candidate with unknown wiring, or unknown. Absence of visible callers does not prove dead code. A wired example supports "used here", not necessarily "the universal preferred API".
 
@@ -40,15 +50,17 @@ Status describes evidence, not approval: observed connected in this snapshot, do
 
 Use block IDs and labeled edges, in a table or text chains. Distinguish calls, data transformations, notification delivery, state read/write, registration, and resource ownership. Cite decisive sources. Describe the major entry-to-result scenarios; keep notification paths separate from commands or mutations.
 
+Use the actual participating child IDs for detailed relationships. Root-level summaries must name the supporting child edges and their scope; a child's call does not establish a parent-wide call, ownership, or every-to-every dependency. Keep navigation containment distinct from runtime edges.
+
 Call order alone does not prove data flow: "calls A, then B" does not establish that B receives A's result. Record the observed sequence and unknown arguments separately. Label a proposed composition as a recommendation supported by contracts, not an existing call-site fact.
 
 For events, trace event type -> producer -> active scope/registration -> consumer -> output/retention. Check synchrony, ordering, error propagation, subscription scope, and durability in code; record unknowns rather than importing broker guarantees.
 
 ### 4. Block Cards
 
-Each indexed block has a card. Merge fields on one line when brevity is needed:
+Every root and child at every depth has a full card, with child cards nested under their parent. The root ceiling limits overview breadth, not retained contracts or required fields. Merge fields on one line when brevity is needed:
 
-- **ID, name, class, status:** primary role and optional secondary roles.
+- **ID, name, class, status:** primary role and optional secondary roles; parent ID or root, and project scope where needed.
 - **Purpose and fit:** responsibility, when to use, and what is outside its contract.
 - **Entry and contract:** actual symbols/protocols, inputs, outputs, errors, and side effects. For state/resources include ownership, lifetime, and transaction/cleanup boundaries when known.
 - **Wiring and relationships:** how it becomes active, required context/configuration, collaborators, and consumers. Mark unknown registration explicitly.
@@ -58,7 +70,7 @@ Each indexed block has a card. Merge fields on one line when brevity is needed:
 
 ### 5. Coverage and Gaps
 
-For each coverage axis list the relevant block IDs, evidence, and omissions: external input/output, main scenarios, substantive local operations, shared protocols, and state/resource ownership. Include relevant startup, shutdown, failure paths, runtime-selected implementations, and extension areas. Reading tests can corroborate intended behavior but does not demonstrate passing tests.
+For each coverage axis list the relevant root/child IDs, evidence, and omissions: external input/output, main scenarios, substantive local operations, shared protocols, and state/resource ownership. Audit all levels for unique placement, complete cards, valid cross-links, and preserved distinct contracts as well as the global root count. Include relevant startup, shutdown, failure paths, runtime-selected implementations, and extension areas. Reading tests can corroborate intended behavior but does not demonstrate passing tests.
 
 "Complete for inspected scope" requires every identified major responsibility in that scope to be represented and relationships traced; it is not a claim that every runtime behavior was proven. Uninspected potentially relevant areas make project-wide coverage partial. List unanswered questions, documentation conflicts, competing implementations, and the next bounded inspection needed. Avoid unsupported percentages.
 
@@ -70,6 +82,8 @@ For a bounded task, refresh affected cards and relationships rather than rebuild
 2. Current evidence: rechecked implementation, entry/contracts, callers, registration/wiring, representative usage, and applicable constraints; identify stale claims and justify discrepancies with the existing decomposition explicitly.
 3. Integration path: which existing mechanism fits, where to connect, and which outputs/state changes remain separate.
 4. Fit and gaps: explain why reuse is appropriate or why no suitable path was established. Distinguish confirmed incompatibility from missing evidence.
+
+For a full refresh of a legacy flat map exceeding ten roots, coherently regroup the whole requested scope. Preserve surviving IDs, contracts, evidence, and relationships; explain moves, new grouping IDs, and any evidence-backed removal. Do not silently keep the first ten, drop outlying contracts, or call a local slice a refreshed full map. If investigation is incomplete, retain known coverage and report the remaining regrouping/evidence gaps explicitly.
 
 If the task also authorizes implementation, this map informs that work but does not widen its permission. Otherwise return guidance without changing code. Update saved content only with write permission; preserve confirmed semantic names, boundaries, stable IDs, and unaffected material.
 
